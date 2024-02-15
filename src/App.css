@@ -1,0 +1,343 @@
+/*
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.success-parent[data-success='true']{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: end;
+}
+
+.success-parent[data-success='true'] .success-message{
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 10px;
+  right: 10px;
+  /* left: 0px; */
+
+  width: 15%;
+  height: 50px;
+  background-color: green;
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+}
+
+.success-parent[data-success='false']{
+  display: none;
+}
+
+.rest[data-uploading='true']{
+  opacity: 0.2;
+}
+
+.uploading[data-uploading='true']{
+  display: block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.uploading[data-uploading='false'] {
+  display: none;
+}
+
+.Photo-box-outline,
+.cam-gps-access,
+.gps-access,
+.map-box,
+.id-user,
+.description,
+.Report-box {
+  width: 343px;
+  margin: 0px 0px 50px 0px;
+}
+
+.Photo-box-outline {
+  height: 242px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #d2d3d5;
+  background: rgba(255, 255, 255, 0);
+  padding: 25px 20px 20px 20px;
+}
+
+.Photo-box-inner {
+  height: 144px;
+  flex-shrink: 0;
+  background: #eaebed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.eclipse {
+  width: 50px;
+  height: 52px;
+  border-radius: 50%;
+  background-color: #d9dadf;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.photos-grid {
+  list-style: none;
+  display: flex;
+  justify-content: flex-start;
+  overflow: scroll, hidden;
+  margin-top: 30px;
+  gap: 1rem;
+}
+.photos-grid > li > img {
+  height: 52px;
+  width: 50px;
+  background-color: antiquewhite;
+  margin-right: 10px;
+}
+
+.cam-gps-access {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #d1d2d5;
+  background: #fff;
+  padding: 0px 20px 0px 20px;
+}
+.cam-gps-access > h3 {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.gps-access {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #d1d2d5;
+  background: #fff;
+  padding: 0px 20px 0px 20px;
+}
+.gps-access > h3 {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.location-p {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f5533d;
+}
+
+.map-box {
+  width: 388px;
+  height: 300px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  border: 1px solid #d2d3d5;
+  background: rgba(255, 255, 255, 0);
+  padding: 0px 0px 0px 0px;
+}
+
+.icons-list {
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+}
+.icons-list > li {
+  margin-right: 14px;
+}
+
+.id-user {
+  display: flex;
+  align-items: center;
+  padding: 0px 20px 0px 20px;
+  margin: 0px;
+}
+.user-pic {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.description {
+  height: 128px;
+  padding: 0px 20px 0px 20px;
+  border-radius: 10px;
+  border: 1px solid #d2d3d5;
+}
+
+.description-box {
+  /* border: 0px solid #fff; */
+  padding: 0px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  border-style: none;
+  border-color: Transparent;
+  overflow: auto;
+  outline: none;
+  resize: none;
+}
+
+.Report-box {
+  display: flex;
+  justify-content: center;
+  height: 45px;
+  flex-shrink: 0;
+  background: #e5e6ec;
+  border: 1px;
+  border-radius: 10px;
+  padding: 0px 20px 0px 20px;
+  cursor: pointer;
+}
+
+.Report-btn {
+  font-size: 16px;
+  font-weight: 600;
+  background: #e5e6ec;
+  border: none;
+  cursor: pointer;
+}
+
+.file-choose-btn {
+  display: none;
+}
+
+.loader {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  .Photo-box-outline,
+  .cam-gps-access,
+  .gps-access,
+  .map-box,
+  .id-user,
+  .description,
+  .Report-box {
+    width: 700px;
+    margin: 0px 0px 50px 0px;
+  }
+
+  .cam-gps-access > h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+  }
+
+  .gps-access > h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+  }
+
+  .map-box {
+    height: 242px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    border: 1px solid #d2d3d5;
+    background: rgba(255, 255, 255, 0);
+    padding: 25px 20px 20px 20px;
+  }
+
+  .id-user {
+    margin: 0px;
+  }
+
+  .description {
+    height: 150px;
+    padding: 0px 20px 0px 20px;
+    border-radius: 10px;
+    border: 1px solid #d2d3d5;
+  }
+
+  .description-box {
+    /* border: 0px solid #fff; */
+    padding: 0px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    border-style: none;
+    border-color: Transparent;
+    overflow: auto;
+    outline: none;
+    resize: none;
+    width: 100%;
+  }
+}
