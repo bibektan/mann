@@ -2,7 +2,7 @@ importScripts('./abc.js');
 importScripts('./idb.js');
 importScripts('./utility.js');
 
-const STATIC_CACHE_NAME = 'static-cache-v3';
+const STATIC_CACHE_NAME = 'static-cache-v4';
 const DYNAMIC_CACHE_NAME = 'dynamic-cache-v1';
 
 self.addEventListener('install', function(event) {
@@ -88,9 +88,33 @@ self.addEventListener('sync', event=>{
                 console.log('data is')
                 console.log(data)
                 for (var dt of data){
-                    console.log('offline')
-                    console.log(storeDataInFirebase('hello'))
+                    console.log('individual data')
+                    console.log(dt)
+                    fetch('http://localhost:5000/addData', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            lat: dt.latitude,
+                            long: dt.longitude,
+                            desc: dt.description,
+                            images: dt.images
+                        })
+                    })
+                    .then(res=>res.json())
+                    .then(dataFromServer=>{
+                        console.log('from sync')
+                        console.log(dataFromServer)
+                    })
                 }
+                
+                // console.log(data)
+                // for (var dt of data){
+                //     console.log('offline')
+                //     console.log(storeDataInFirebase('hello'))
+                // }
             })
         )
     }

@@ -37,6 +37,28 @@ export default function App() {
       })
     }
 
+    // fetch('http://localhost:5000/', {
+    //   method: 'GET'
+    // }).then(res=>res.json()).then(data=>{
+    //   console.log(data)
+    // })
+
+    // fetch('http://localhost:5000/addData', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   body: JSON.stringify({
+    //     lat: '564564',
+    //     long: '56464',
+    //     desc: 'kldsjlk'
+    //   })
+    // })
+    // .then(res=>res.json())
+    // .then(data=>{
+    //   console.log(data)
+    // })
+
     // readData();
   },[])
 
