@@ -77,44 +77,47 @@ self.addEventListener('fetch', event=>{
     )
 })
 
-
 self.addEventListener('sync', event=>{
     console.log('sync event triggered')
     if (event.tag === 'sync-new-post'){
         console.log('syncing new posts')
         event.waitUntil(
             readAllData('sync-posts')
-            .then(data=>{
-                console.log('data is')
-                console.log(data)
-                for (var dt of data){
-                    console.log('individual data')
-                    console.log(dt)
-                    fetch('http://localhost:5000/addData', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            lat: dt.latitude,
-                            long: dt.longitude,
-                            desc: dt.description,
-                            images: dt.images
-                        })
-                    })
-                    .then(res=>res.json())
-                    .then(dataFromServer=>{
-                        console.log('from sync')
-                        console.log(dataFromServer)
-                    })
+            .then((data)=>{
+                console.log('the data coming in sw.js is:')
+                console.log(data[0])
+
+                let imageFiles = data[0].images;
+
+                let rawData = { lat: data[0].latitude, long: data[0].longitude, desc: data[0].description };
+
+                let formData = new FormData();
+
+                // Append non-file data
+                for (let key in rawData) {
+                    formData.append(key, rawData[key]);
                 }
-                
-                // console.log(data)
-                // for (var dt of data){
-                //     console.log('offline')
-                //     console.log(storeDataInFirebase('hello'))
-                // }
+
+                imageFiles.map(file=>{
+                    formData.append('images', file);
+                })
+                // formData.append('images', imageFiles)
+
+                console.log('before fetching')
+
+                fetch('http://localhost:5000/checkingData', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(dataFromServer => {
+                    deleteItemFromData('sync-posts', data[0].id);
+                    console.log('data got back from server');
+                    console.log(dataFromServer);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             })
         )
     }

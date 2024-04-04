@@ -19,10 +19,13 @@ export default function UploadPhoto({ imgState, imgSetState, imageFile, setImage
     let urlOnlyArr = []
 
     Object.entries(fileArray).map(file=>{
+      console.log('each file')
       console.log(file[1])
 
       let img = file[1];
       if (img) {
+        console.log('image only')
+        console.log(img)
         filesOnlyArr.push(img)
         //set image file
         // setImageFile([...imageFile, img])
@@ -39,12 +42,15 @@ export default function UploadPhoto({ imgState, imgSetState, imageFile, setImage
 
     })
 
-    console.log('out of loop')
+    
     // console.log(filesOnlyArr)
     // console.log(urlOnlyArr)
-
+    
     setImageFile([...imageFile, ...filesOnlyArr])
     imgSetState([...imgState, ...urlOnlyArr])
+
+    console.log('from upload photo.js')
+    console.log(filesOnlyArr)
   };
 
   return (

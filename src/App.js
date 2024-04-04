@@ -79,24 +79,114 @@ export default function App() {
       });
     });
 
+
   const addData = async()=>{
+    console.log('after submit')
+    console.log(imageFiles)
+
+
+    // let rawData = { lat: lat, long: long, desc: dec, images: imageFiles};
+
+    // let formData = new FormData();
+
+    // // Append non-file data
+    // for (let key in rawData) {
+    //   formData.append(key, rawData[key]);
+    // }
+
+    // // resize image file
+    // const imagePromises = imageFiles.map(async (file) => {
+
+    //   const image = await resizeFile(file);
+
+    //   const response = await fetch(image);
+    //   const blob = await response.blob();
+
+    //   let randFileName = Math.floor(Math.random() * 1000) + 1;
+    //   let timeNow = Date.now()
+    //   const resizedFile = new File([blob], `${randFileName + timeNow}.jpg`, { type: "image/jpeg" });
+
+    //   formData.append('images', resizedFile)
+    // })
+
+    // await Promise.all(imagePromises);
+    
+
+    // fetch('http://localhost:5000/checkingData', {
+    //   method: 'POST',
+    //   body: formData
+    // })
+    // .then(res => res.json())
+    // .then(data => {
+    //   console.log('from app.js')
+    //   console.log(data)
+    // })
+    // .catch(err => {
+    //   console.log('error while sending data to server')
+    //   console.log(err)
+    // });
+
+
 
     try{
 
       if ('serviceWorker' in navigator && 'SyncManager' in window){
-        console.log('from sync')
         navigator.serviceWorker.ready
-        .then(sw=>{
-          console.log('service worker ready')
-          var post = {
+        .then(async(sw)=>{
+
+          // let rawData = { lat: lat, long: long, desc: dec, images: imageFiles };
+
+          // let formData = new FormData();
+
+          // // Append non-file data
+          // for (let key in rawData) {
+          //   formData.append(key, rawData[key]);
+          // }
+
+          // // resize image file
+          // const imagePromises = imageFiles.map(async (file) => {
+
+          //   const image = await resizeFile(file);
+
+          //   const response = await fetch(image);
+          //   const blob = await response.blob();
+
+          //   let randFileName = Math.floor(Math.random() * 1000) + 1;
+          //   let timeNow = Date.now()
+          //   const resizedFile = new File([blob], `${randFileName + timeNow}.jpg`, { type: "image/jpeg" });
+
+          //   formData.append('images', resizedFile)
+          // })
+
+          // await Promise.all(imagePromises);
+
+          // resize image file
+
+          let images = [];
+
+          const imagePromises = imageFiles.map(async (file) => {
+
+            const image = await resizeFile(file);
+
+            const response = await fetch(image);
+            const blob = await response.blob();
+
+            let randFileName = Math.floor(Math.random() * 1000) + 1;
+            let timeNow = Date.now()
+            const resizedFile = new File([blob], `${randFileName + timeNow}.jpg`, { type: "image/jpeg" });
+            images.push(resizedFile)
+          })
+
+          await Promise.all(imagePromises);
+
+
+          let post = {
             id: new Date().toISOString(),
             latitude: lat,
             longitude: long,
             description: dec,
             images: imageFiles
           }
-
-          
 
           writeData('sync-posts', post)
             .then(() => {
@@ -180,9 +270,6 @@ export default function App() {
     }catch(e){
       console.log(`error while adding data in firestore: ${e}`)
     }
-
-    console.log('from bottom')
-    // console.log(imageFiles)
 
   }
 
